@@ -15,6 +15,4 @@ jobs:
         run: |
           export BUILDOZER_WARN_ON_ROOT=0
           export P4A_ALLOW_ROOT=1
-          run-with-input() { yes y | $1; }
           buildozer android debug --bready
-# dynamic prompt auto response fix
