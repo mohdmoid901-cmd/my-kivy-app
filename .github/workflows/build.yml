@@ -16,4 +16,8 @@ jobs:
           export BUILDOZER_WARN_ON_ROOT=0
           export P4A_ALLOW_ROOT=1
           yes y | buildozer android debug || true
-# automatic license driver added
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-kivy-app
+          path: .buildozer/android/platform/build-android/dists/*/bin/*.apk
