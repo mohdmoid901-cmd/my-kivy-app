@@ -1,42 +1,13 @@
-name: Build Android APK
-
-      - name: Install Unzip
-        run: sudo apt-get update && sudo apt-get install -y unzip zip
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+name: Build APK
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-22.04
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install Buildozer Dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk libffi-dev libssl-dev autoconf automake libtool pkg-config zlib1g-dev
-
+      - uses: actions/checkout@v4
       - name: Build with Buildozer
-        run: |
-          pip install --upgrade pip
-          pip install buildozer cython==0.29.33
-          buildozer -v android debug
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: ArtemSBulgakov/buildozer-action@v3
         with:
-          name: package
-          path: bin/*.apk
-          
-# unzip added
+          workdir: .
+          buildozer_version: 1.6.0
+# dynamic run trigger
