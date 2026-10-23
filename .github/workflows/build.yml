@@ -1,31 +1,20 @@
-name: Full Automatic Build
+name: Auto Build
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Automatic System Setup
+      - name: Setup Environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip python3-setuptools python3-dev autoconf libtool pkg-config zlib1g-dev libncurses5-dev libbz2-dev libreadline-dev libsqlite3-dev libssl-dev libgdbm-dev libffi-dev liblzma-dev tk-dev libspatialindex-dev libltdl-dev bison flex texinfo libgmp-dev libmpfr-dev libmpc-dev m4
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip python3-dev autoconf libtool pkg-config zlib1g-dev libncurses5-dev libbz2-dev libreadline-dev libsqlite3-dev libssl-dev libffi-dev liblzma-dev libltdl-dev bison flex texinfo libgmp-dev libmpfr-dev libmpc-dev m4
           pip3 install --upgrade pip
           pip3 install buildozer cython virtualenv
-      - name: Accept Android SDK Licenses
-        run: |
-          mkdir -p ~/.android
-          touch ~/.android/repositories.cfg
-          mkdir -p /home/runner/.buildozer/android/platform/android-sdk/licenses
-          echo -e "
-2446c5507d81eb090d2cd1149e3938371f723c83
-601085b94cd77f6b00b7807c314dae410bc111b3
-84831b9409646a918e30573bab4c9c91346d8abd
-504667f4c0de7af1a06de9f4b1727b84351f2910
-8933bad161af4178b1185d1a37fbf41ea5269c55
-2f1150cd65ae09d974230d4e330e8c63452d2247" > /home/runner/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-      - name: Automatic APK Build
+      - name: Compile APK
         run: |
           export BUILDOZER_WARN_ON_ROOT=0
           export P4A_ALLOW_ROOT=1
-          buildozer android debug
-# safe identity trigger
+          run-with-input() { yes y | $1; }
+          buildozer android debug --bready
+# dynamic prompt auto response fix
