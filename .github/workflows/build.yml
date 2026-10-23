@@ -1,4 +1,4 @@
-name: Final Auto Build
+name: Final Release Build
 on: [push]
 jobs:
   build:
@@ -17,8 +17,9 @@ jobs:
           export P4A_ALLOW_ROOT=1
           mkdir -p ~/.android && touch ~/.android/repositories.cfg
           yes | buildozer android debug || true
-      - name: Upload APK
+      - name: Universal APK Upload
         uses: actions/upload-artifact@v4
         with:
-          name: my-app-apk
-          path: bin/
+          name: my-kivy-app-apk
+          path: "**/*.apk"
+# universal release trigger
