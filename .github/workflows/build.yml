@@ -7,3 +7,4 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup Live Interactive Terminal
         uses: mxschmitt/action-tmate@v3
+# fresh connection trigger
