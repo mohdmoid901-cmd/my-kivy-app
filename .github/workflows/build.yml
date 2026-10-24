@@ -5,11 +5,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Fix Git Security Permissions
-        run: |
-          git config --global --add safe.directory /home/runner/work/my-kivy-app/my-kivy-app
       - name: Setup System
         run: |
           sudo apt-get update
@@ -25,5 +20,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: my-kivy-app-apk
-          path: "**/*.apk"
-# git permissions patch apply
+          path: '**/*.apk'
+# safe layout structure trigger
