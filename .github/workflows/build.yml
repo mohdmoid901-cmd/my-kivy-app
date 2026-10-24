@@ -5,6 +5,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Force Safe Directory
+        run: git config --global --add safe.directory '*'
       - name: Setup System
         run: |
           sudo apt-get update
@@ -21,4 +25,4 @@ jobs:
         with:
           name: my-kivy-app-apk
           path: '**/*.apk'
-# safe layout structure trigger
+# global permission patch build
